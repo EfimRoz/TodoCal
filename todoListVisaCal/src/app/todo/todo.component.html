@@ -1,0 +1,46 @@
+<div class="input" *ngFor="let todo of todos">
+  <div class="todo-item">
+    <label>
+      <div class="todo-checklist">
+        <div *ngIf="todo !== editableTodo">
+          <input
+            *ngIf="todo.isComplete; else displayUnCheckedCheckBox"
+            type="checkbox"
+            checked
+            (change)="onToggleTodoStatus.emit(todo)"
+          />
+          <ng-template type="checkbox" #displayUnCheckedCheckBox>
+            <input
+              type="checkbox"
+              (change)="onToggleTodoStatus.emit(todo)"
+            />
+          </ng-template>
+        </div>
+        <div
+          *ngIf="todo !== editableTodo; else displayContentEditable"
+          [class.finished]="todo.isComplete"
+          [attr.contenteditable]="todo === editableTodo"
+          (keyup)="onKeyboardUse.emit({key:$event, value:$event.target.textContent})"
+          #todoName>
+          {{todo.name}}
+        </div>
+        <ng-template #displayContentEditable>
+          <div
+            class="editable"
+            [class.finished]="todo.isComplete"
+            [attr.contenteditable]="todo === editableTodo"
+            (keyup)="onKeyboardUse.emit({key:$event, value:$event.target.textContent})"
+            #todoName>
+            {{tempVal}}
+          </div>
+        </ng-template>
+        <!--(keypress)="onKeyboardUse.emit($event,  $event.target.textContent)">  -->
+      </div>
+
+    </label>
+    <div>
+      <button (click)="onDeleteTodo.emit(todo)">x</button>
+      <button (click)="editTodo(todo,todo.name)">Edit</button>
+    </div>
+  </div>
+</div>

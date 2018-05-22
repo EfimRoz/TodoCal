@@ -1,0 +1,23 @@
+.input{
+  display: flex;
+  justify-content: center;
+}
+.finished{
+  text-decoration: line-through;
+  opacity: 0.5;
+  color:grey;
+}
+.todo-item{
+  min-width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+.todo-checklist{
+  display: flex;
+}
+div{
+  transition: 0.5s;
+}
+.editable{
+  border: 0.1px solid blue;
+}

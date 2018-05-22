@@ -1,0 +1,6 @@
+<input
+  #inputField
+  placeholder="to do"
+  (keyup.enter)="addInput(inputField.value); inputField.value=''">
+<button
+  (click)="addInput(inputField.value); inputField.value=''">Add</button>
