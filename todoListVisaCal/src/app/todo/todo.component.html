@@ -20,7 +20,7 @@
           *ngIf="todo !== editableTodo; else displayContentEditable"
           [class.finished]="todo.isComplete"
           [attr.contenteditable]="todo === editableTodo"
-          (keyup)="onKeyboardUse.emit({key:$event, value:$event.target.textContent})"
+          (keyup)="onTodoEdition.emit({key:$event, value:$event.target.textContent})"
           #todoName>
           {{todo.name}}
         </div>
@@ -29,12 +29,13 @@
             class="editable"
             [class.finished]="todo.isComplete"
             [attr.contenteditable]="todo === editableTodo"
-            (keyup)="onKeyboardUse.emit({key:$event, value:$event.target.textContent})"
+            (keyup)="updateEditableTodo($event.target.textContent)"
+            (keypress)="checkFinishEditing($event, $event.target.textContent)"
             #todoName>
             {{tempVal}}
           </div>
         </ng-template>
-        <!--(keypress)="onKeyboardUse.emit($event,  $event.target.textContent)">  -->
+        <!--(keypress)="onTodoEdition.emit($event,  $event.target.textContent)">  -->
       </div>
 
     </label>

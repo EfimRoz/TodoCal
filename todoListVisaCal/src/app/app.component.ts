@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {TodoService} from './todo/todo.service';
 import {Todo} from './models/todo.model';
+import {FinishEditEvent} from "./models/finish-edit-event.model";
 
 @Component({
   selector: 'app-root',
@@ -28,17 +29,12 @@ export class AppComponent {
     this.todoService.deleteTodo(todo);
   }
   // !IMPORTANT
-  editTodo(payload): void {
+  editTodo(finishEditEvent: FinishEditEvent): void {
     // editing an todo item
-    this.todoService.editTodo(payload.todo, payload.value);
+    this.todoService.editTodo(finishEditEvent.todo, finishEditEvent.inputValue);
   }
   // !IMPORTANT find the right type
-  handleKeyboardEvent(input): void {
-    if (input.key.code === 'Enter') {
-      this.todoService.stopEditingTodo(input.value);
-      input.key.preventDefault();
-    } else {
-      this.todoService.updateEditableTodo(input.value)
-    }
+  updateEditableTodo(inputValue: string): void {
+      this.todoService.updateEditableTodo(inputValue);
   }
 }

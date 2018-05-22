@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Todo} from '../models/todo.model';
+import {TodoService} from "./todo.service";
+import {FinishEditEvent} from "../models/finish-edit-event.model";
 
 @Component({
   selector: 'app-todo',
@@ -11,17 +13,28 @@ export class TodoComponent implements OnInit {
   @Input() editableTodo: Todo;
   @Output() onToggleTodoStatus = new EventEmitter<object>();
   @Output() onDeleteTodo = new EventEmitter<object>();
-  @Output() onEditTodo = new EventEmitter<object>();
-  @Output() onKeyboardUse = new EventEmitter<object>();
+  @Output() onEditTodo = new EventEmitter<FinishEditEvent>();
+  @Output() onTodoEdition = new EventEmitter<string>();
 
   tempVal = '';
-  constructor() { }
+  constructor( private todoService: TodoService) { }
 
   editTodo(todo: Todo, value: string): void {
-    this.tempVal = value;
-    this.onEditTodo.emit({todo: todo, value: value});
+    this.tempVal = value
+    const finishEditEvent = new FinishEditEvent(todo, value);
+    this.onEditTodo.emit(finishEditEvent);
+  }
+  checkFinishEditing(event: KeyboardEvent, content: string) {
+    if (event.code === 'Enter') {
+      // this.updateEditableTodo(event, content);
+      this.todoService.finishEditingTodo(content);
+      event.preventDefault();
+    }
   }
 
+  updateEditableTodo(content: string): void {
+    this.onTodoEdition.emit(content);
+  }
   ngOnInit() {
   }
 

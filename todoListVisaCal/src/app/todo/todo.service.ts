@@ -76,7 +76,7 @@ export class TodoService {
       this.saveTodos(this.todos);
     }
 
-    stopEditingTodo(value: string): void {
+    finishEditingTodo(value: string): void {
       this.editableTodo.name = value;
       this.editableTodo = null;
       this.saveTodos(this.todos);

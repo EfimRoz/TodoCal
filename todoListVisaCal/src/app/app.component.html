@@ -7,7 +7,7 @@
     (onToggleTodoStatus)="onToggleTodoStatus($event)"
     (onDeleteTodo)="deleteTodo($event)"
     (onEditTodo)="editTodo($event)"
-    (onKeyboardUse)="handleKeyboardEvent($event)"
+    (onTodoEdition)="updateEditableTodo($event)"
     [todos]="todoService.getTodos()"
     [editableTodo]="todoService.getEditableTodo()"></app-todo>
   <app-input
