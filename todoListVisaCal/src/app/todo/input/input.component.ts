@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -8,6 +8,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class InputComponent implements OnInit {
 
   @Output() onAddTodo = new EventEmitter<string>();
+  @ViewChild('inputField') inputField:ElementRef;
 
   constructor() { }
 
@@ -15,6 +16,7 @@ export class InputComponent implements OnInit {
   }
 
   addInput(val: string) {
+    this.inputField.nativeElement.value = '';
     this.onAddTodo.emit(val);
   }
 

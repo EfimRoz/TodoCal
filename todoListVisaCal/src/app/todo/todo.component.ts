@@ -11,8 +11,8 @@ import {FinishEditEvent} from "../models/finish-edit-event.model";
 export class TodoComponent implements OnInit {
   @Input() todos: Todo[];
   @Input() editableTodo: Todo;
-  @Output() onToggleTodoStatus = new EventEmitter<object>();
-  @Output() onDeleteTodo = new EventEmitter<object>();
+  @Output() onToggleTodoStatus = new EventEmitter<Todo>();
+  @Output() onDeleteTodo = new EventEmitter<Todo>();
   @Output() onEditTodo = new EventEmitter<FinishEditEvent>();
   @Output() onTodoEdition = new EventEmitter<string>();
 
@@ -24,7 +24,7 @@ export class TodoComponent implements OnInit {
     const finishEditEvent = new FinishEditEvent(todo, value);
     this.onEditTodo.emit(finishEditEvent);
   }
-  checkFinishEditing(event: KeyboardEvent, content: string) {
+  checkFinishEditing(event: KeyboardEvent, content: string): void {
     if (event.code === 'Enter') {
       // this.updateEditableTodo(event, content);
       this.todoService.finishEditingTodo(content);
