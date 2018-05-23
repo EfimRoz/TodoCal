@@ -1,4 +1,4 @@
-.input{
+.todos-container{
   display: flex;
   justify-content: center;
 }
@@ -15,7 +15,7 @@
 .todo-checklist{
   display: flex;
 }
-div{
+label{
   transition: 0.5s;
 }
 .editable{
@@ -27,12 +27,16 @@ div{
   width: 100%;
 }
 .todo-check-item {
-  width: 85%;
+  width: calc(100% - 62px);
   display: flex;
 }
 .todo-buttons {
   display: flex;
+  width: 62px;
 }
-p {
-  margin: 0;
+.todo-buttons button:nth-child(1) {
+  width: 33%;
+}
+.todo-buttons button:nth-child(2) {
+  width: 67%;
 }

@@ -1,91 +1,61 @@
-import { Injectable } from '@angular/core';
 import {Todo} from '../models/todo.model';
 
-const LOCAL_STORAGE_TODOS = 'todos';
+export abstract class TodoService {
+  static LOCAL_STORAGE_TODOS = 'todos';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TodoService {
-
-  private todos: Todo[];
-  private editableTodo: Todo;
-
-  constructor() {
-    this.todos = this.loadTodos();
-    this.todos.forEach( todo =>{
+  static loadTodos(): Todo[] {
+    const todos = JSON.parse(localStorage.getItem(TodoService.LOCAL_STORAGE_TODOS));
+    todos.forEach( todo =>{
       todo.creationTime = new Date(todo.creationTime);
-    })
+    });
+    return todos;
+  }
+  static addTodoObject(todos: Todo[], todoName: string): void {
+    const todo: Todo = TodoService.buildTodoObject(todoName);
+    todos.push(todo);
+    TodoService.saveTodos(todos);
   }
 
-    addTodoObject(todoName: string): void {
-      const todo: Todo = this.buildTodoObject(todoName);
-      this.todos.push(todo);
-      this.saveTodos(this.todos);
-    }
+  static buildTodoObject(todoName: string): Todo {
+    const newTodo: Todo = new Todo( TodoService.generateId(), todoName, new Date() ,false);
+    return newTodo;
+  }
 
-    buildTodoObject(todoName: string): Todo {
-      const todo: Todo = { id: this.generateId(), name: todoName, creationTime: new Date(), isComplete: false};
-      return todo;
-    }
 
-    toggleTodoStatus(todo): void {
-      // changing todo status
-      todo.isComplete = !todo.isComplete;
-      this.saveTodos(this.todos);
-    }
+  static saveTodos(todos: Todo[]): void {
+    localStorage.setItem(TodoService.LOCAL_STORAGE_TODOS, JSON.stringify(todos));
+  }
 
-    getTodos(): Todo[] {
-      if (this.todos) {
-        return this.todos;
-      } else {
-        this.todos = [ new Todo(this.generateId(), 'example', new Date(), false)];
-        return this.todos;
-      }
-    }
+  static generateGenericTodoList(): Todo[] {
+    return [ new Todo(TodoService.generateId(), 'This is example todo', new Date(), false)];
+  }
 
-    saveTodos(todos: Todo[]): void {
-      localStorage.setItem(LOCAL_STORAGE_TODOS, JSON.stringify(todos));
-    }
+  static generateId(): string {
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal. although in production I would use some uuid library just in case.
+    return '_' + Math.random().toString(36).substr(2, 9);
+  }
 
-    loadTodos(): Todo[] {
-      return JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS));
-    }
+  static deleteTodo(todos: Todo[], todoToFind: Todo): void {
+    const idx: number = todos.findIndex( todo => todo.id === todoToFind.id );
+    todos.splice(idx, 1);
+    TodoService.saveTodos(todos);
+  }
 
-    generateId(): string {
-      // Math.random should be unique because of its seeding algorithm.
-      // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-      // after the decimal. although in production I would use some uuid library just in case.
-      return '_' + Math.random().toString(36).substr(2, 9);
+  static editTodo(editableTodo, todo: Todo, value: string): Todo {
+    let newEditableTodo: Todo;
+    if (editableTodo === todo) {
+      todo.name = value;
+      newEditableTodo = null;
+    } else {
+      newEditableTodo = todo;
     }
+    return newEditableTodo;
+  }
 
-    deleteTodo(todoToFind: Todo): void {
-      const idx: number = this.todos.findIndex( todo => todo === todoToFind )
-      this.todos.splice(idx, 1);
-      this.saveTodos(this.todos);
-    }
-
-    editTodo(todo: Todo, value: string): void {
-      if (this.editableTodo === todo) {
-        todo.name = value;
-        this.editableTodo = null;
-      } else {
-        this.editableTodo = todo;
-      }
-    }
-
-    updateEditableTodo(value: string): void{
-      this.editableTodo.name = value;
-      this.saveTodos(this.todos);
-    }
-
-    finishEditingTodo(value: string): void {
-      this.editableTodo.name = value;
-      this.editableTodo = null;
-      this.saveTodos(this.todos);
-    }
-
-    getEditableTodo(): Todo {
-      return this.editableTodo;
-    }
+  static findTodoIndex(todos: Todo[], todoId: string): number {
+    const todoIndex = todos.findIndex( todo => todo.id === todoId);
+    return todoIndex;
+  }
 }

@@ -1,11 +1,11 @@
-<div class="input" *ngFor="let todo of todos">
+<div class="todos-container" *ngFor="let todo of todos">
   <div class="todo-item">
     <div class="todo-check-item">
         <input
           *ngIf="todo !== editableTodo"
           type="checkbox"
           [checked]="todo.isComplete"
-          (change)="onToggleTodoStatus.emit(todo)"
+          (change)="toggleTodoStatus(todo)"
           [id]="todo.id"
           title="status of the todo item"
         />
@@ -18,7 +18,7 @@
           <!--<p-->
             <!--&gt;-->
             {{todo.name}}
-      <time *ngIf="todo !== editableTodo">{{formatTime(todo.creationTime)}}</time>
+      <time *ngIf="todo !== editableTodo" class="time">{{formatTime(todo.creationTime)}}</time>
       </label>
 
       <!--</p>-->
@@ -34,11 +34,9 @@
               <time *ngIf="todo !== editableTodo">{{formatTime(todo.creationTime)}}</time>
             </label>
           </ng-template>
-          <!--(keypress)="onTodoEdition.emit($event,  $event.target.textContent)">  -->
-
     </div>
     <div class="todo-buttons">
-      <button (click)="onDeleteTodo.emit(todo)">x</button>
+      <button (click)="onDeleteTodo.emit(todo.id)">x</button>
       <button (click)="editTodo(todo,todo.name)">Edit</button>
     </div>
   </div>

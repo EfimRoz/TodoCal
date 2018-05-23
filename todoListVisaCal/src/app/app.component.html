@@ -1,15 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Welcome to {{title}}!
+    Welcome to my Todo-List!
   </h1>
   <app-todo
     (onToggleTodoStatus)="onToggleTodoStatus($event)"
-    (onDeleteTodo)="deleteTodo($event)"
-    (onEditTodo)="editTodo($event)"
+    (onDeleteTodo)="onDeleteTodoRequest($event)"
+    (onEditTodo)="onEditTodoInit($event)"
     (onTodoEdition)="updateEditableTodo($event)"
-    [todos]="todoService.getTodos()"
-    [editableTodo]="todoService.getEditableTodo()"></app-todo>
+    (onFinishEditingTodo)="finishEditingTodo($event)"
+    (onSaveTodos)="todoService.saveTodos(todos)"
+    [todos]="getTodos()"
+    [editableTodo]="getEditableTodo()"></app-todo>
   <app-input
     (onAddTodo)="onAddTodo($event)"
   ></app-input>
