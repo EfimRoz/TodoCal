@@ -15,9 +15,11 @@ export class InputComponent implements OnInit {
   ngOnInit() {
   }
 
-  addInput(val: string) {
-    this.inputField.nativeElement.value = '';
-    this.onAddTodo.emit(val);
+  addInput(val: string): void {
+    if (val.trim() !== '') {
+      this.inputField.nativeElement.value = '';
+      this.onAddTodo.emit(val);
+    }
   }
 
 }

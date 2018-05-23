@@ -1,9 +1,11 @@
+import {Todo} from "./todo.model";
+
 export class FinishEditEvent {
-  todoId: string;
+  todo: Todo;
   inputValue: string;
 
-  constructor(todoId: string, inputValue: string) {
-    this.todoId = todoId;
+  constructor(todo: Todo, inputValue: string) {
+    this.todo = todo;
     this.inputValue = inputValue;
   }
 }

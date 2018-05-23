@@ -10,8 +10,8 @@ import {FinishEditEvent} from "../models/finish-edit-event.model";
 export class TodoComponent implements OnInit {
   @Input() todos: Todo[];
   @Input() editableTodo: Todo;
-  @Output() onToggleTodoStatus = new EventEmitter<string>();
-  @Output() onDeleteTodo = new EventEmitter<string>();
+  @Output() onToggleTodoStatus = new EventEmitter<Todo>();
+  @Output() onDeleteTodo = new EventEmitter<Todo>();
   @Output() onEditTodo = new EventEmitter<FinishEditEvent>();
   @Output() onTodoEdition = new EventEmitter<string>();
   @Output() onFinishEditingTodo = new EventEmitter<string>();
@@ -26,7 +26,7 @@ export class TodoComponent implements OnInit {
 
   editTodo(todo: Todo, value: string): void {
     this.tempVal = value;
-    const finishEditEvent = new FinishEditEvent(todo.id, value);
+    const finishEditEvent = new FinishEditEvent(todo, value);
     this.onEditTodo.emit(finishEditEvent);
   }
 
@@ -50,7 +50,7 @@ export class TodoComponent implements OnInit {
   }
 
   toggleTodoStatus(todo): void {
-    this.onToggleTodoStatus.emit(todo.id);
+    this.onToggleTodoStatus.emit(todo);
   }
 
 }

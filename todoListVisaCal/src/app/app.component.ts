@@ -35,51 +35,22 @@ export class AppComponent implements OnInit{
     TodoService.addTodoObject(this.todos, todoName);
   }
 
-  onToggleTodoStatus(todoId: string): void {
+  onToggleTodoStatus(todo: Todo): void {
     //changing todo complete status
-    const todoIndex = TodoService.findTodoIndex(this.todos, todoId);
-    if( todoIndex in this.todos) {
-      const todo = this.todos[todoIndex];
-      this.toggleTodoStatus(todo);
-    } else {
-      console.error('Invalid todo id for status toggle was received');
-    }
-  }
-
-  toggleTodoStatus(todo: Todo): void {
     todo.isComplete = !todo.isComplete;
     this.saveTodos();
   }
 
-  onDeleteTodoRequest(id: string): void {
-    const todoDeleteIndex = TodoService.findTodoIndex(this.todos, id);
-    if( todoDeleteIndex in this.todos) {
-      const todoToDelete = this.todos[todoDeleteIndex];
-      this.deleteTodo(todoToDelete);
-    }
-    else {
-      console.error('Invalid id for deletion was received');
-    }
-  }
-
-  deleteTodo(todoToDelete: Todo): void {
-    TodoService.deleteTodo(this.todos, todoToDelete);
+  onDeleteTodoRequest(todo: Todo): void {
+    TodoService.deleteTodo(this.todos, todo);
   }
 
   onEditTodoInit(finishEditEvent: FinishEditEvent): void {
-    const todoToEditIndex = TodoService.findTodoIndex( this.todos, finishEditEvent.todoId);
-    if( todoToEditIndex in this.todos) {
-      const todo = this.todos[todoToEditIndex];
-      this.editTodo(todo, finishEditEvent.inputValue);
-    } else {
-      console.log('Invalid todo id was received was edit initiation ');
-    }
+      const todo = finishEditEvent.todo;
+      const inputValue = finishEditEvent.inputValue;
+      this.editableTodo = TodoService.editTodo(this.editableTodo, todo, inputValue);
   }
 
-  editTodo(todo, inputValue): void {
-    // editing an todo item
-    this.editableTodo = TodoService.editTodo(this.editableTodo, todo, inputValue);
-  }
 
   finishEditingTodo(value: string): void {
     this.editableTodo.name = value;

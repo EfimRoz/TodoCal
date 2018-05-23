@@ -10,6 +10,7 @@ export abstract class TodoService {
     });
     return todos;
   }
+
   static addTodoObject(todos: Todo[], todoName: string): void {
     const todo: Todo = TodoService.buildTodoObject(todoName);
     todos.push(todo);
@@ -54,8 +55,4 @@ export abstract class TodoService {
     return newEditableTodo;
   }
 
-  static findTodoIndex(todos: Todo[], todoId: string): number {
-    const todoIndex = todos.findIndex( todo => todo.id === todoId);
-    return todoIndex;
-  }
 }
