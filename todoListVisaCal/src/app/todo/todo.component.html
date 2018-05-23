@@ -9,35 +9,21 @@
           [id]="todo.id"
           title="status of the todo item"
         />
-      <label [for]="todo.id"
-             class="todo-description"
-             *ngIf="todo !== editableTodo; else displayContentEditable"
-             [class.finished]="todo.isComplete"
-             [attr.contenteditable]="todo === editableTodo"
-      >
-          <!--<p-->
-            <!--&gt;-->
-            {{todo.name}}
-      <time *ngIf="todo !== editableTodo" class="time">{{formatTime(todo.creationTime)}}</time>
-      </label>
-
-      <!--</p>-->
-          <ng-template #displayContentEditable>
             <label
               [for]="todo.id"
-              class="editable"
+              class="todo-description"
+              [ngClass]="{editable: todo === editableTodo}"
               [class.finished]="todo.isComplete"
               [attr.contenteditable]="todo === editableTodo"
-              (keyup)="updateEditableTodo($event.target.textContent)"
+              (keyup)="updateEditableTodo($event.target.textContent, todo)"
               (keypress)="checkFinishEditing($event, $event.target.textContent)">
-              {{tempVal}}
+              {{(todo === editableTodo) ? tempVal : todo.value}}
               <time *ngIf="todo !== editableTodo">{{formatTime(todo.creationTime)}}</time>
             </label>
-          </ng-template>
     </div>
     <div class="todo-buttons">
       <button (click)="onDeleteTodo.emit(todo)">x</button>
-      <button (click)="editTodo(todo,todo.name)">Edit</button>
+      <button (click)="editTodo(todo)">Edit</button>
     </div>
   </div>
 </div>

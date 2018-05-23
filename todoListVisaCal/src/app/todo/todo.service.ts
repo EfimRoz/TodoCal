@@ -47,7 +47,7 @@ export abstract class TodoService {
   static editTodo(editableTodo, todo: Todo, value: string): Todo {
     let newEditableTodo: Todo;
     if (editableTodo === todo) {
-      todo.name = value;
+      todo.value = value;
       newEditableTodo = null;
     } else {
       newEditableTodo = todo;

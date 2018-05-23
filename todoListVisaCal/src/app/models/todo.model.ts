@@ -1,12 +1,12 @@
 export class Todo {
   id: string;
-  name: string;
+  value: string;
   creationTime: Date;
   isComplete: boolean;
 
-  constructor( id: string, name: string, creationTime: Date, isComplete: boolean) {
+  constructor( id: string, value: string, creationTime: Date, isComplete: boolean) {
     this.id = id;
-    this.name = name;
+    this.value = value;
     this.creationTime = creationTime;
     this.isComplete = isComplete;
   }

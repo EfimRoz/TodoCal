@@ -12,7 +12,7 @@ export class TodoComponent implements OnInit {
   @Input() editableTodo: Todo;
   @Output() onToggleTodoStatus = new EventEmitter<Todo>();
   @Output() onDeleteTodo = new EventEmitter<Todo>();
-  @Output() onEditTodo = new EventEmitter<FinishEditEvent>();
+  @Output() onEditTodo = new EventEmitter<Todo>();
   @Output() onTodoEdition = new EventEmitter<string>();
   @Output() onFinishEditingTodo = new EventEmitter<string>();
   @Output() onSaveTodos = new EventEmitter<void>();
@@ -24,15 +24,14 @@ export class TodoComponent implements OnInit {
   ngOnInit() {}
 
 
-  editTodo(todo: Todo, value: string): void {
-    this.tempVal = value;
-    const finishEditEvent = new FinishEditEvent(todo, value);
-    this.onEditTodo.emit(finishEditEvent);
+  editTodo(todo: Todo): void {
+    this.tempVal = todo.value;
+    this.onEditTodo.emit(todo);
   }
 
-  checkFinishEditing(event: KeyboardEvent, content: string): void {
+  checkFinishEditing(event: KeyboardEvent, todo: Todo): void {
     if (event.code === 'Enter') {
-      this.onFinishEditingTodo.emit(content);
+      this.editTodo(todo);
       event.preventDefault();
     }
   }
