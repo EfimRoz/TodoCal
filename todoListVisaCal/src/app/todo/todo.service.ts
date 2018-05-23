@@ -30,20 +30,13 @@ export abstract class TodoService {
     return [ new Todo(TodoService.generateId(), 'This is example todo', new Date(), false)];
   }
 
-  static generateId(): string {
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal. although in production I would use some uuid library just in case.
-    return '_' + Math.random().toString(36).substr(2, 9);
-  }
-
   static deleteTodo(todos: Todo[], todoToFind: Todo): void {
     const idx: number = todos.findIndex( todo => todo.id === todoToFind.id );
     todos.splice(idx, 1);
     TodoService.saveTodos(todos);
   }
 
-  static editTodo(editableTodo, todo: Todo, value: string): Todo {
+  static editTodo(editableTodo: Todo, todo: Todo, value: string): Todo {
     let newEditableTodo: Todo;
     if (editableTodo === todo) {
       todo.value = value;
@@ -52,6 +45,13 @@ export abstract class TodoService {
       newEditableTodo = todo;
     }
     return newEditableTodo;
+  }
+
+  static generateId(): string {
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal. although in production I would use some uuid library just in case.
+    return '_' + Math.random().toString(36).substr(2, 9);
   }
 
 }

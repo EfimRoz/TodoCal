@@ -39,14 +39,14 @@ export class TodoComponent implements OnInit {
   }
 
   formatTime(date: Date): string{
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const hours: number = date.getHours();
+    const minutes: number = date.getMinutes();
     // Adding a 0 for a single char minutes for the globally accepted format.
     const strMinutes: string = (minutes < 10) ? `0${minutes}` : `${minutes}`;
     return `${hours}:${strMinutes}`;
   }
 
-  toggleTodoStatus(todo): void {
+  toggleTodoStatus(todo: Todo): void {
     this.onToggleTodoStatus.emit(todo);
   }
 

@@ -35,7 +35,6 @@ export class AppComponent implements OnInit{
   }
 
   onToggleTodoStatus(todo: Todo): void {
-    //changing todo complete status
     todo.isComplete = !todo.isComplete;
     this.saveTodos();
   }
