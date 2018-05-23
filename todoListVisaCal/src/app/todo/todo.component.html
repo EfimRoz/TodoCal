@@ -1,25 +1,25 @@
 <div class="todos-container" *ngFor="let todo of todos">
   <div class="todo-item">
     <div class="todo-check-item">
-        <input
-          *ngIf="todo !== editableTodo"
-          type="checkbox"
-          [checked]="todo.isComplete"
-          (change)="toggleTodoStatus(todo)"
-          [id]="todo.id"
-          title="status of the todo item"
-        />
-            <label
-              [for]="todo.id"
-              class="todo-description"
-              [ngClass]="{editable: todo === editableTodo}"
-              [class.finished]="todo.isComplete"
-              [attr.contenteditable]="todo === editableTodo"
-              (keyup)="updateEditableTodo($event.target.textContent, todo)"
-              (keypress)="checkFinishEditing($event, $event.target.textContent)">
-              {{(todo === editableTodo) ? tempVal : todo.value}}
-              <time *ngIf="todo !== editableTodo">{{formatTime(todo.creationTime)}}</time>
-            </label>
+      <input
+        *ngIf="todo !== editableTodo"
+        type="checkbox"
+        [checked]="todo.isComplete"
+        (change)="toggleTodoStatus(todo)"
+        [id]="todo.id"
+        title="status of the todo item"
+      />
+      <label
+        [for]="todo.id"
+        class="todo-description"
+        [ngClass]="{editable: todo === editableTodo}"
+        [class.finished]="todo.isComplete"
+        [attr.contenteditable]="todo === editableTodo"
+        (keyup)="updateEditableTodo($event.target.textContent, todo)"
+        (keypress)="checkFinishEditing($event, $event.target.textContent)">
+        {{(todo === editableTodo) ? tempVal : todo.value}}
+        <time *ngIf="todo !== editableTodo">{{formatTime(todo.creationTime)}}</time>
+      </label>
     </div>
     <div class="todo-buttons">
       <button (click)="onDeleteTodo.emit(todo)">x</button>

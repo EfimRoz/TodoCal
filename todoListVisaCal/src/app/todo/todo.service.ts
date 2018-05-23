@@ -22,7 +22,6 @@ export abstract class TodoService {
     return newTodo;
   }
 
-
   static saveTodos(todos: Todo[]): void {
     localStorage.setItem(TodoService.LOCAL_STORAGE_TODOS, JSON.stringify(todos));
   }

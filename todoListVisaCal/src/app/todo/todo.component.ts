@@ -10,19 +10,17 @@ import {FinishEditEvent} from "../models/finish-edit-event.model";
 export class TodoComponent implements OnInit {
   @Input() todos: Todo[];
   @Input() editableTodo: Todo;
+
   @Output() onToggleTodoStatus = new EventEmitter<Todo>();
   @Output() onDeleteTodo = new EventEmitter<Todo>();
   @Output() onEditTodo = new EventEmitter<Todo>();
   @Output() onTodoEdition = new EventEmitter<string>();
-  @Output() onFinishEditingTodo = new EventEmitter<string>();
   @Output() onSaveTodos = new EventEmitter<void>();
 
   tempVal = '';
 
-
   constructor() { }
   ngOnInit() {}
-
 
   editTodo(todo: Todo): void {
     this.tempVal = todo.value;
