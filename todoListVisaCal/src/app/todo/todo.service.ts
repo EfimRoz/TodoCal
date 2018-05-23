@@ -27,7 +27,7 @@ export abstract class TodoService {
   }
 
   static generateGenericTodoList(): Todo[] {
-    return [ new Todo(TodoService.generateId(), 'This is example todo', new Date(), false)];
+    return [ new Todo(TodoService.generateId(), 'This is an example todo', new Date(), false)];
   }
 
   static deleteTodo(todos: Todo[], todoToFind: Todo): void {
