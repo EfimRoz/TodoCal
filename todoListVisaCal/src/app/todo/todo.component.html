@@ -7,28 +7,35 @@
           [checked]="todo.isComplete"
           (change)="onToggleTodoStatus.emit(todo)"
           [id]="todo.id"
+          title="status of the todo item"
         />
-      <label [for]="todo.id" class="todo-description">
-          <div
-            *ngIf="todo !== editableTodo; else displayContentEditable"
-            [class.finished]="todo.isComplete"
-            [attr.contenteditable]="todo === editableTodo">
+      <label [for]="todo.id"
+             class="todo-description"
+             *ngIf="todo !== editableTodo; else displayContentEditable"
+             [class.finished]="todo.isComplete"
+             [attr.contenteditable]="todo === editableTodo"
+      >
+          <!--<p-->
+            <!--&gt;-->
             {{todo.name}}
-          </div>
+      <time *ngIf="todo !== editableTodo">{{formatTime(todo.creationTime)}}</time>
+      </label>
+
+      <!--</p>-->
           <ng-template #displayContentEditable>
-            <div
+            <label
+              [for]="todo.id"
               class="editable"
               [class.finished]="todo.isComplete"
               [attr.contenteditable]="todo === editableTodo"
               (keyup)="updateEditableTodo($event.target.textContent)"
               (keypress)="checkFinishEditing($event, $event.target.textContent)">
               {{tempVal}}
-            </div>
+              <time *ngIf="todo !== editableTodo">{{formatTime(todo.creationTime)}}</time>
+            </label>
           </ng-template>
-          <time>{{formatTime(todo.creationTime)}}</time>
           <!--(keypress)="onTodoEdition.emit($event,  $event.target.textContent)">  -->
 
-      </label>
     </div>
     <div class="todo-buttons">
       <button (click)="onDeleteTodo.emit(todo)">x</button>

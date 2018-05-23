@@ -33,3 +33,6 @@ div{
 .todo-buttons {
   display: flex;
 }
+p {
+  margin: 0;
+}
