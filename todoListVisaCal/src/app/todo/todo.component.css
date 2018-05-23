@@ -21,3 +21,15 @@ div{
 .editable{
   border: 0.1px solid blue;
 }
+.todo-description {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.todo-check-item {
+  width: 85%;
+  display: flex;
+}
+.todo-buttons {
+  display: flex;
+}

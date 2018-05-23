@@ -18,6 +18,7 @@ export class TodoComponent implements OnInit {
 
   tempVal = '';
   constructor( private todoService: TodoService) { }
+  ngOnInit() {}
 
   editTodo(todo: Todo, value: string): void {
     this.tempVal = value
@@ -35,7 +36,14 @@ export class TodoComponent implements OnInit {
   updateEditableTodo(content: string): void {
     this.onTodoEdition.emit(content);
   }
-  ngOnInit() {
+
+  formatTime(date: Date): string{
+    // const date = new Date();
+    if(date) {
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      return `${hours}:${minutes}`;
+    } else return '';
   }
 
 }

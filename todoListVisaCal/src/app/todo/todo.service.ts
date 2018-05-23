@@ -13,6 +13,9 @@ export class TodoService {
 
   constructor() {
     this.todos = this.loadTodos();
+    this.todos.forEach( todo =>{
+      todo.creationTime = new Date(todo.creationTime);
+    })
   }
 
     addTodoObject(todoName: string): void {
@@ -52,7 +55,7 @@ export class TodoService {
     generateId(): string {
       // Math.random should be unique because of its seeding algorithm.
       // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-      // after the decimal.
+      // after the decimal. although in production I would use some uuid library just in case.
       return '_' + Math.random().toString(36).substr(2, 9);
     }
 

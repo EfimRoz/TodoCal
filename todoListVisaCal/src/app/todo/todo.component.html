@@ -1,42 +1,36 @@
 <div class="input" *ngFor="let todo of todos">
   <div class="todo-item">
-    <label>
-      <div class="todo-checklist">
-        <div *ngIf="todo !== editableTodo">
-          <input
-            *ngIf="todo.isComplete; else displayUnCheckedCheckBox"
-            type="checkbox"
-            checked
-            (change)="onToggleTodoStatus.emit(todo)"
-          />
-          <ng-template type="checkbox" #displayUnCheckedCheckBox>
-            <input
-              type="checkbox"
-              (change)="onToggleTodoStatus.emit(todo)"
-            />
-          </ng-template>
-        </div>
-        <div
-          *ngIf="todo !== editableTodo; else displayContentEditable"
-          [class.finished]="todo.isComplete"
-          [attr.contenteditable]="todo === editableTodo">
-          {{todo.name}}
-        </div>
-        <ng-template #displayContentEditable>
+    <div class="todo-check-item">
+        <input
+          *ngIf="todo !== editableTodo"
+          type="checkbox"
+          [checked]="todo.isComplete"
+          (change)="onToggleTodoStatus.emit(todo)"
+          [id]="todo.id"
+        />
+      <label [for]="todo.id" class="todo-description">
           <div
-            class="editable"
+            *ngIf="todo !== editableTodo; else displayContentEditable"
             [class.finished]="todo.isComplete"
-            [attr.contenteditable]="todo === editableTodo"
-            (keyup)="updateEditableTodo($event.target.textContent)"
-            (keypress)="checkFinishEditing($event, $event.target.textContent)">
-            {{tempVal}}
+            [attr.contenteditable]="todo === editableTodo">
+            {{todo.name}}
           </div>
-        </ng-template>
-        <!--(keypress)="onTodoEdition.emit($event,  $event.target.textContent)">  -->
-      </div>
+          <ng-template #displayContentEditable>
+            <div
+              class="editable"
+              [class.finished]="todo.isComplete"
+              [attr.contenteditable]="todo === editableTodo"
+              (keyup)="updateEditableTodo($event.target.textContent)"
+              (keypress)="checkFinishEditing($event, $event.target.textContent)">
+              {{tempVal}}
+            </div>
+          </ng-template>
+          <time>{{formatTime(todo.creationTime)}}</time>
+          <!--(keypress)="onTodoEdition.emit($event,  $event.target.textContent)">  -->
 
-    </label>
-    <div>
+      </label>
+    </div>
+    <div class="todo-buttons">
       <button (click)="onDeleteTodo.emit(todo)">x</button>
       <button (click)="editTodo(todo,todo.name)">Edit</button>
     </div>
