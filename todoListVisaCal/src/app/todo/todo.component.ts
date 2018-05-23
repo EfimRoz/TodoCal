@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Todo} from '../models/todo.model';
-import {FinishEditEvent} from "../models/finish-edit-event.model";
 
 @Component({
   selector: 'app-todo',
